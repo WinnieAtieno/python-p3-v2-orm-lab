@@ -187,4 +187,33 @@ class Employee:
 
     def reviews(self):
         """Return list of reviews associated with current employee"""
-        pass
+        from review import Review
+        sql = """
+             
+                SELECT * FROM reviews
+                WHERE employee_id = ?
+        
+
+               """
+        CURSOR.execute(sql, (self.id,),)
+
+        rows = CURSOR.fetchall()
+
+        return [
+            Review.instance_from_db(row) for row in rows
+        ]
+       
+
+        # """Return list of employees associated with current department"""
+        # from employee import Employee
+        # sql = """
+        #     SELECT * FROM employees
+        #     WHERE department_id = ?
+        # """
+        # CURSOR.execute(sql, (self.id,),)
+
+        # rows = CURSOR.fetchall()
+        # return [
+        #     Employee.instance_from_db(row) for row in rows
+        # ]
+        
